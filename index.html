@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="img/ICON_WHITE.png" />
+    <title>CDP Analytix</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("ICTYGT3YQ35-0m9og"); // Reemplaza con tu clave pública
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+      }
+
+      /* Colores principales */
+      :root {
+        --primary-blue: #003f72;
+        --light-blue: #0066cc;
+        --accent-blue: #4a90e2;
+        --light-gray: #f8f9fa;
+        --white: #ffffff;
+        --dark-gray: #2c3e50;
+      }
+
+      /* Header y navegación */
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 63, 114, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: 1rem 0;
+        transition: all 0.3s ease;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--white);
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-menu a {
+        color: var(--white);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 500;
+      }
+
+      .nav-menu a:hover {
+        color: var(--accent-blue);
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          var(--light-blue) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--white);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        animation: float 20s ease-in-out infinite;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        z-index: 2;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .cta-button {
+        background: var(--accent-blue);
+        color: var(--white);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 600;
+      }
+
+      .cta-button:hover {
+        background: var(--white);
+        color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Secciones generales */
+      .section {
+        padding: 5rem 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--accent-blue);
+        border-radius: 2px;
+      }
+
+      /* About Section */
+      .about {
+        background: var(--light-gray);
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .about-text h3 {
+        color: var(--primary-blue);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .about-text p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .mission-vision {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .mission,
+      .vision {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .mission:hover,
+      .vision:hover {
+        transform: translateY(-5px);
+      }
+
+      .mission h4,
+      .vision h4 {
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      /* Services Section */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .service-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 63, 114, 0.1);
+        transition: all 0.3s ease;
+        border-top: 4px solid var(--accent-blue);
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 63, 114, 0.2);
+      }
+
+      .service-icon {
+        font-size: 3rem;
+        color: var(--accent-blue);
+        margin-bottom: 1rem;
+      }
+
+      .service-card h3 {
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+
+      /* Portfolio Section */
+      .portfolio {
+        background: var(--light-gray);
+      }
+
+      .carousel-container {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        background: var(--white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 63, 114, 0.15);
+      }
+
+      .carousel-slide {
+        display: none;
+        padding: 3rem;
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .carousel-slide.active {
+        display: block;
+      }
+
+      .carousel-slide img {
+        max-width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .carousel-slide h3 {
+        color: var(--primary-blue);
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .carousel-slide p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 63, 114, 0.8);
+        color: var(--white);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .carousel-nav:hover {
+        background: var(--primary-blue);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .carousel-prev {
+        left: 20px;
+      }
+
+      .carousel-next {
+        right: 20px;
+      }
+
+      .carousel-dots {
+        text-align: center;
+        padding: 2rem;
+        background: var(--white);
+      }
+
+      .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ddd;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: var(--accent-blue);
+        transform: scale(1.2);
+      }
+
+      /* Pricing Section */
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .pricing-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 63, 114, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .pricing-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .pricing-card h3 {
+        color: var(--primary-blue);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--accent-blue);
+      }
+
+      .pricing-card ul {
+        list-style: none;
+        margin-bottom: 1.5rem;
+      }
+
+      .pricing-card li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .pricing-card li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--accent-blue);
+        font-weight: bold;
+      }
+
+      .terms {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+
+      .terms h3 {
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+      }
+
+      .terms ol {
+        padding-left: 1.5rem;
+      }
+
+      .terms li {
+        margin-bottom: 1rem;
+      }
+
+      /* Contact Section */
+      .contact {
+        background: var(--primary-blue);
+        color: var(--white);
+        text-align: center;
+      }
+
+      .contact .section-title {
+        color: var(--white);
+      }
+
+      .contact .section-title::after {
+        background: var(--accent-blue);
+      }
+
+      .contact-info {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-button {
+        display: inline-block;
+        background: var(--accent-blue);
+        color: var(--white);
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .contact-button:hover {
+        background: var(--white);
+        color: var(--primary-blue);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero p {
+          font-size: 1.1rem;
+        }
+
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .mission-vision {
+          grid-template-columns: 1fr;
+        }
+
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .carousel-nav {
+          display: none;
+        }
+
+        .carousel-slide {
+          padding: 2rem 1rem;
+        }
+      }
+
+      /* Scroll animations */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Contact Section */
+      .contact {
+        background: var(--primary-blue);
+        color: var(--white);
+        text-align: center;
+      }
+
+      .contact .section-title {
+        color: var(--white);
+      }
+
+      .contact .section-title::after {
+        background: var(--accent-blue);
+      }
+
+      .contact-info {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-button {
+        display: inline-block;
+        background: var(--accent-blue);
+        color: var(--white);
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .contact-button:hover {
+        background: var(--white);
+        color: var(--primary-blue);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Contact Form Styles */
+      .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 3rem;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .form-group {
+        margin-bottom: 2rem;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--white);
+        font-size: 1.1rem;
+      }
+
+      .form-group label i {
+        margin-right: 0.5rem;
+        color: var(--accent-blue);
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark-gray);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+        background: var(--white);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .contact-button {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        padding: 1.2rem;
+      }
+
+      .form-message {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.1rem;
+        animation: slideDown 0.5s ease;
+      }
+
+      .form-message.success {
+        background: rgba(40, 167, 69, 0.9);
+        border: 2px solid #28a745;
+        color: var(--white);
+      }
+
+      .form-message.error {
+        background: rgba(220, 53, 69, 0.9);
+        border: 2px solid #dc3545;
+        color: var(--white);
+      }
+
+      .form-message i {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero p {
+          font-size: 1.1rem;
+        }
+
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .mission-vision {
+          grid-template-columns: 1fr;
+        }
+
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .carousel-nav {
+          display: none;
+        }
+
+        .carousel-slide {
+          padding: 2rem 1rem;
+        }
+      }
+
+      /* Scroll animations */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav-container">
+        <div class="logo">CDP Analytix</div>
+        <ul class="nav-menu">
+          <li><a href="#home">Inicio</a></li>
+          <li><a href="#about">Acerca de</a></li>
+          <li><a href="#services">Servicios</a></li>
+          <li><a href="#portfolio">Portafolio</a></li>
+          <li><a href="#pricing">Precios</a></li>
+          <li><a href="#contact">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>CDP Analytix</h1>
+        <p>
+          Soluciones tecnológicas accesibles, eficientes y personalizadas en
+          análisis de datos, desarrollo web y soporte digital
+        </p>
+        <a href="#contact" class="cta-button">Contáctanos</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+      <div class="container">
+        <h2 class="section-title fade-in">¿Quién soy?</h2>
+        <div class="about-grid fade-in">
+          <div class="about-text">
+            <h3>Consultor Tecnológico Especializado</h3>
+            <p>
+              Soy un consultor tecnológico especializado en análisis de datos,
+              desarrollo web y soluciones digitales. Cuento con experiencia en
+              herramientas como Power BI, Power Query, Excel, SQL Server y
+              MySQL, así como en la creación de páginas y plataformas web.
+            </p>
+            <p>
+              Además, ofrezco soporte técnico básico en hardware. Me apasiona la
+              tecnología y mi enfoque está en brindar soluciones prácticas,
+              eficientes y orientadas al futuro.
+            </p>
+          </div>
+          <div class="mission-vision">
+            <div class="mission">
+              <h4><i class="fas fa-bullseye"></i> Misión</h4>
+              <p>
+                Brindar soluciones tecnológicas accesibles, eficientes y
+                personalizadas en análisis de datos, desarrollo web y soporte
+                digital, ayudando a personas y empresas a tomar decisiones
+                informadas, optimizar procesos y adaptarse al futuro digital con
+                herramientas innovadoras y confiables.
+              </p>
+            </div>
+            <div class="vision">
+              <h4><i class="fas fa-eye"></i> Visión</h4>
+              <p>
+                Ser una empresa referente en soluciones tecnológicas integrales,
+                reconocida por impulsar la transformación digital de personas y
+                organizaciones mediante el uso estratégico de datos, desarrollo
+                web y soporte tecnológico, contribuyendo a un futuro más
+                conectado, inteligente y accesible.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2 class="section-title fade-in">Servicios</h2>
+        <div class="services-grid fade-in">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3>Consultoría en Análisis de Datos</h3>
+            <p>
+              Transformamos tus datos en insights valiosos con Power BI, Excel y
+              herramientas avanzadas de análisis.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Desarrollo Web</h3>
+            <p>
+              Creamos sitios web modernos, responsivos y funcionales adaptados a
+              tus necesidades específicas.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>Soporte Técnico en Hardware</h3>
+            <p>
+              Brindamos soporte técnico básico para optimizar el rendimiento de
+              tus equipos.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Capacitación y Asesoría Personalizada</h3>
+            <p>
+              Formamos a tu equipo en herramientas digitales para maximizar su
+              potencial tecnológico.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section portfolio">
+      <div class="container">
+        <h2 class="section-title fade-in">Portafolio</h2>
+        <div class="carousel-container fade-in">
+          <!-- Slide 1 - Power BI -->
+          <div class="carousel-slide active">
+            <img src="img/POWER BI.png" alt="Dashboard Power BI" />
+            <h3>Análisis de Datos con Power BI</h3>
+            <p>
+              Proyecto de práctica enfocado en el uso de Power BI para el
+              análisis de datos. Se aplicaron técnicas de limpieza,
+              transformación con Power Query y visualización interactiva
+              utilizando diferentes tipos de gráficos y filtros. Ideal para
+              demostrar el flujo completo desde la carga hasta la visualización
+              de datos.
+            </p>
+          </div>
+
+          <!-- Slide 2 - Database -->
+          <div class="carousel-slide">
+            <img src="img/MYSQL.png" alt="Base de Datos" />
+            <h3>Gestión de Bases de Datos</h3>
+            <p>
+              Manejo consultas y estructuras de bases de datos en MySQL y SQL
+              Server para extraer, organizar y preparar información útil para
+              análisis y visualización.
+            </p>
+          </div>
+
+          <!-- Slide 3 - Web Development -->
+          <div class="carousel-slide">
+            <img src="img/DESARROLLO WEB.png" alt="Desarrollo Web" />
+            <h3>Desarrollo Web Personalizado</h3>
+            <p>
+              Ejemplo de desarrollo web desde código utilizando Visual Studio
+              Code. Manejo HTML, CSS, JavaScript y herramientas modernas para
+              crear sitios funcionales, responsivos y personalizados.
+            </p>
+          </div>
+
+          <!-- Slide 4 - Financial Platform -->
+          <div class="carousel-slide">
+            <img src="img/PLATAFORMA ROI.png" alt="Plataforma Financiera" />
+            <h3>Plataforma Web Comercial</h3>
+            <p>
+              Plataforma web personalizada para un cliente del sector comercial.
+              El sistema permite registrar movimientos financieros, visualizar
+              balances y calcular el ROI (retorno de inversión) de forma
+              automática. La solución fue creada para facilitar el control
+              financiero del negocio y mejorar la toma de decisiones mediante
+              datos precisos y accesibles desde cualquier dispositivo.
+            </p>
+          </div>
+
+          <!-- Navigation buttons -->
+          <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">
+            ❮
+          </button>
+          <button class="carousel-nav carousel-next" onclick="changeSlide(1)">
+            ❯
+          </button>
+        </div>
+
+        <!-- Dots indicator -->
+        <div class="carousel-dots">
+          <span class="dot active" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+          <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section">
+      <div class="container">
+        <h2 class="section-title fade-in">Desglose de Servicios</h2>
+
+        <div class="pricing-grid fade-in">
+          <div class="pricing-card">
+            <h3>Análisis de Datos y Reportes</h3>
+            <ul>
+              <li>Dashboard en Power BI (básico)</li>
+              <li>Dashboard avanzado con conexión a bases de datos</li>
+              <li>Automatización de reportes con Power Query</li>
+              <li>Limpieza y análisis de datos en Excel</li>
+            </ul>
+          </div>
+
+          <div class="pricing-card">
+            <h3>Desarrollo Web</h3>
+            <ul>
+              <li>Página web informativa básica (1–3 secciones)</li>
+              <li>
+                Sitio web profesional con diseño personalizado (hasta 5
+                secciones)
+              </li>
+              <li>Plataforma web o sistema a medida</li>
+              <li>Mantenimiento mensual (actualizaciones, soporte)</li>
+            </ul>
+          </div>
+
+          <div class="pricing-card">
+            <h3>Soporte Técnico Básico</h3>
+            <ul>
+              <li>Cambio de RAM, disco duro o SSD</li>
+              <li>Formateo e instalación de sistema operativo</li>
+              <li>Optimización básica del sistema</li>
+            </ul>
+          </div>
+
+          <div class="pricing-card">
+            <h3>Capacitación y Asesoría</h3>
+            <ul>
+              <li>Clase o sesión personalizada (1 hora)</li>
+              <li>Curso básico de Power BI o Excel (4 horas)</li>
+              <li>Asesoría para implementación de herramientas digitales</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="terms fade-in">
+          <h3>Términos Importantes sobre los Servicios</h3>
+          <ol>
+            <li>
+              Los precios no incluyen licencias de software, equipos físicos, ni
+              productos adicionales que pudieran ser requeridos por el cliente
+              (como licencias de herramientas, plataformas externas o sistemas
+              de terceros).
+            </li>
+            <li>
+              En el caso de desarrollo web o de plataformas personalizadas: El
+              costo incluye únicamente el desarrollo y entrega de la plataforma
+              o página web. El dominio está incluido, pero el servicio de
+              hosting se cotiza y cobra por separado de forma anual, dependiendo
+              del tipo de proyecto (hosting compartido, VPS o dedicado).
+            </li>
+            <li>
+              Si el cliente lo solicita, se puede entregar el código completo
+              del desarrollo web. En ese caso: Se firma un contrato de entrega
+              de código fuente. No se otorgará garantía sobre cambios
+              posteriores hechos por terceros al código entregado. La garantía
+              solo cubre el funcionamiento del sistema en el entorno de hosting
+              entregado. Cualquier modificación externa y futura al código que
+              requiera corrección tendrá un costo adicional.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title fade-in">Contáctanos</h2>
+        <div class="contact-info fade-in">
+          <p>
+            Completa el formulario para agendar una consulta, resolver dudas o
+            solicitar una cotización.
+          </p>
+        </div>
+
+        <form class="contact-form fade-in" id="contactForm">
+          <div class="form-group">
+            <label for="fullName">
+              <i class="fas fa-user"></i> Nombre Completo
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              required
+              placeholder="Ingresa tu nombre completo"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              <i class="fas fa-envelope"></i> Correo Electrónico
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="tu@email.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">
+              <i class="fas fa-phone"></i> Número de Teléfono
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              placeholder="+52 XXX XXX XXXX"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">
+              <i class="fas fa-comment"></i> Mensaje (Opcional)
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Describe brevemente tu proyecto o necesidad..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="contact-button">
+            <i class="fas fa-paper-plane"></i> Enviar Mensaje
+          </button>
+        </form>
+
+        <div
+          id="form-success"
+          class="form-message success"
+          style="display: none"
+        >
+          <i class="fas fa-check-circle"></i>
+          <p>¡Mensaje enviado exitosamente! Te contactaremos pronto.</p>
+        </div>
+
+        <div id="form-error" class="form-message error" style="display: none">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>
+            Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      style="
+        background: var(--dark-gray);
+        color: var(--white);
+        text-align: center;
+        padding: 2rem 0;
+      "
+    >
+      <div class="container">
+        <p>&copy; 2025 CDP Analytix. Todos los derechos reservados.</p>
+        <p style="margin-top: 1rem; opacity: 0.8">
+          Soluciones tecnológicas para el futuro digital
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Carousel functionality
+      let slideIndex = 1;
+      const slides = document.querySelectorAll(".carousel-slide");
+      const dots = document.querySelectorAll(".dot");
+
+      function showSlide(n) {
+        if (n > slides.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = slides.length;
+        }
+
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+
+        slides[slideIndex - 1].classList.add("active");
+        dots[slideIndex - 1].classList.add("active");
+      }
+
+      function changeSlide(n) {
+        slideIndex += n;
+        showSlide(slideIndex);
+      }
+
+      function currentSlide(n) {
+        slideIndex = n;
+        showSlide(slideIndex);
+      }
+
+      // Auto-advance carousel
+      setInterval(() => {
+        slideIndex++;
+        showSlide(slideIndex);
+      }, 5000);
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".fade-in").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Header background on scroll
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector(".header");
+        if (window.scrollY > 100) {
+          header.style.background = "rgba(0, 63, 114, 0.98)";
+        } else {
+          header.style.background = "rgba(0, 63, 114, 0.95)";
+        }
+      });
+
+      // Add loading animation
+      window.addEventListener("load", function () {
+        document.body.style.opacity = "0";
+        document.body.style.transition = "opacity 0.5s ease";
+        setTimeout(() => {
+          document.body.style.opacity = "1";
+        }, 100);
+      });
+
+      // Contact Form Handler con EmailJS
+      // INSTRUCCIONES: Reemplaza estos valores con los de tu cuenta EmailJS
+
+      const EMAILJS_SERVICE_ID = "service_dtty4lc"; // Ejemplo: 'service_abc123'
+      const EMAILJS_TEMPLATE_ID = "template_1cikdqh"; // Ejemplo: 'template_xyz456'
+      const EMAILJS_PUBLIC_KEY = "ICTYGT3YQ35-0m9og"; // Ejemplo: 'user_ABC123XYZ'
+
+      // Inicializar EmailJS
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Get form data
+          const formData = new FormData(this);
+          const templateParams = {
+            fullName: formData.get("fullName"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            message: formData.get("message") || "No se proporcionó mensaje adicional.",
+            title: "Contacto desde el sitio web"
+            };
+
+          // Show loading state
+          const submitButton = this.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+          submitButton.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+          submitButton.disabled = true;
+
+          // Send email using EmailJS
+          emailjs
+            .send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+            .then(
+              function (response) {
+                console.log(
+                  "Email enviado exitosamente!",
+                  response.status,
+                  response.text
+                );
+
+                // Reset button
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+
+                // Show success message
+                document.getElementById("form-success").style.display = "block";
+                document.getElementById("form-error").style.display = "none";
+
+                // Reset form
+                document.getElementById("contactForm").reset();
+
+                // Reset input styles
+                const formInputs = document.querySelectorAll(
+                  "input[required], select[required]"
+                );
+                formInputs.forEach((input) => {
+                  input.style.borderColor = "rgba(255, 255, 255, 0.3)";
+                });
+
+                // Hide success message after 8 seconds
+                setTimeout(() => {
+                  document.getElementById("form-success").style.display =
+                    "none";
+                }, 8000);
+
+                // Scroll to success message
+                document.getElementById("form-success").scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+              },
+              function (error) {
+                console.error("Error al enviar email:", error);
+
+                // Reset button
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+
+                // Show error message
+                document.getElementById("form-error").style.display = "block";
+                document.getElementById("form-success").style.display = "none";
+
+                // Hide error message after 8 seconds
+                setTimeout(() => {
+                  document.getElementById("form-error").style.display = "none";
+                }, 8000);
+
+                // Scroll to error message
+                document.getElementById("form-error").scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+              }
+            );
+        });
+
+      // Phone number formatting
+      document.getElementById("phone").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length >= 10) {
+          value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/, "+$1 $2 $3 $4");
+        }
+        e.target.value = value;
+      });
+
+      // Form validation styling
+      const inputs = document.querySelectorAll(
+        "input[required], select[required]"
+      );
+      inputs.forEach((input) => {
+        input.addEventListener("blur", function () {
+          if (this.value.trim() === "") {
+            this.style.borderColor = "#dc3545";
+          } else {
+            this.style.borderColor = "#28a745";
+          }
+        });
+
+        input.addEventListener("input", function () {
+          if (this.value.trim() !== "") {
+            this.style.borderColor = "#28a745";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
